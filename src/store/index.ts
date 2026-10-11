@@ -29,12 +29,21 @@ export function unregisterCustomDictionary(id: string) {
   delete idDictionaryMap[id]
 }
 
-initialCustomDictionaries.forEach(registerCustomDictionary)
-
 export const currentDictIdAtom = atomWithStorage('currentDict', 'cet4')
 export const currentDictInfoAtom = atom<Dictionary>((get) => {
   const id = get(currentDictIdAtom)
   let dict = idDictionaryMap[id]
+
+  // Persisted custom dictionaries must not touch idDictionaryMap during module initialization.
+  // Resolve and register them lazily when the UI actually reads the current dictionary.
+  if (!dict) {
+    const customDictionary = get(customDictionariesAtom).find((item) => item.id === id)
+    if (customDictionary) {
+      registerCustomDictionary(customDictionary)
+      dict = customDictionary
+    }
+  }
+
   // 如果 dict 不存在，则返回 cet4. Typing 中会检查 DictId 是否存在，如果不存在则会重置为 cet4
   if (!dict) {
     dict = idDictionaryMap.cet4
