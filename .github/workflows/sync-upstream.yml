@@ -1,0 +1,29 @@
+name: One-time sync from upstream
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/sync-upstream.yml
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Reset main to latest upstream master
+        shell: bash
+        run: |
+          set -euo pipefail
+          git remote add upstream https://github.com/RealKai42/qwerty-learner.git
+          git fetch upstream master
+          echo "Syncing to upstream commit $(git rev-parse upstream/master)"
+          git push --force origin upstream/master:main
