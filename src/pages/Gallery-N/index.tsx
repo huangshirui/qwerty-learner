@@ -1,9 +1,9 @@
 import DictionaryGroup from './CategoryDicts'
+import CustomDictionaryManager from './CustomDictionaryManager'
 import DictRequest from './DictRequest'
 import { LanguageTabSwitcher } from './LanguageTabSwitcher'
 import Layout from '@/components/Layout'
-import { dictionaries } from '@/resources/dictionary'
-import { currentDictInfoAtom } from '@/store'
+import { allDictionariesAtom, currentDictInfoAtom } from '@/store'
 import type { Dictionary, LanguageCategoryType } from '@/typings'
 import groupBy, { groupByDictTags } from '@/utils/groupBy'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
@@ -32,6 +32,7 @@ export const GalleryContext = createContext<{
 export default function GalleryPage() {
   const [galleryState, setGalleryState] = useImmer<GalleryState>(initialGalleryState)
   const navigate = useNavigate()
+  const dictionaries = useAtomValue(allDictionariesAtom)
   const currentDictInfo = useAtomValue(currentDictInfoAtom)
 
   const { groupedByCategoryAndTag } = useMemo(() => {
@@ -44,7 +45,7 @@ export default function GalleryPage() {
     return {
       groupedByCategoryAndTag,
     }
-  }, [galleryState.currentLanguageTab])
+  }, [dictionaries, galleryState.currentLanguageTab])
 
   const onBack = useCallback(() => {
     navigate('/')
@@ -69,7 +70,10 @@ export default function GalleryPage() {
             <div className="flex h-full flex-col overflow-y-auto">
               <div className="flex h-20 w-full items-center justify-between pb-6 pr-20">
                 <LanguageTabSwitcher />
-                <DictRequest />
+                <div className="flex items-center gap-2">
+                  <CustomDictionaryManager />
+                  <DictRequest />
+                </div>
               </div>
               <ScrollArea.Root className="flex-1 overflow-y-auto">
                 <ScrollArea.Viewport className="h-full w-full ">

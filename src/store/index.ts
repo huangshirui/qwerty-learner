@@ -1,7 +1,9 @@
 import atomForConfig from './atomForConfig'
 import { reviewInfoAtom } from './reviewInfoAtom'
 import { DISMISS_START_CARD_DATE_KEY, defaultFontSizeConfig } from '@/constants'
-import { idDictionaryMap } from '@/resources/dictionary'
+import { initialCustomDictionaries } from '@/features/customDictionary/registry'
+import { CUSTOM_DICTIONARY_STORAGE_KEY } from '@/features/customDictionary/storage'
+import { dictionaries, idDictionaryMap } from '@/resources/dictionary'
 import { correctSoundResources, keySoundResources, wrongSoundResources } from '@/resources/soundResource'
 import type {
   Dictionary,
@@ -15,6 +17,9 @@ import type {
 import type { ReviewRecord } from '@/utils/db/record'
 import { atom } from 'jotai'
 import { atomWithStorage } from 'jotai/utils'
+
+export const customDictionariesAtom = atomWithStorage<Dictionary[]>(CUSTOM_DICTIONARY_STORAGE_KEY, initialCustomDictionaries)
+export const allDictionariesAtom = atom<Dictionary[]>((get) => [...dictionaries, ...get(customDictionariesAtom)])
 
 export const currentDictIdAtom = atomWithStorage('currentDict', 'cet4')
 export const currentDictInfoAtom = atom<Dictionary>((get) => {
