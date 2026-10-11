@@ -21,6 +21,16 @@ import { atomWithStorage } from 'jotai/utils'
 export const customDictionariesAtom = atomWithStorage<Dictionary[]>(CUSTOM_DICTIONARY_STORAGE_KEY, initialCustomDictionaries)
 export const allDictionariesAtom = atom<Dictionary[]>((get) => [...dictionaries, ...get(customDictionariesAtom)])
 
+export function registerCustomDictionary(dictionary: Dictionary) {
+  idDictionaryMap[dictionary.id] = dictionary
+}
+
+export function unregisterCustomDictionary(id: string) {
+  delete idDictionaryMap[id]
+}
+
+initialCustomDictionaries.forEach(registerCustomDictionary)
+
 export const currentDictIdAtom = atomWithStorage('currentDict', 'cet4')
 export const currentDictInfoAtom = atom<Dictionary>((get) => {
   const id = get(currentDictIdAtom)

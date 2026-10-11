@@ -7,7 +7,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { registerCustomDictionary, unregisterCustomDictionary } from '@/features/customDictionary/registry'
 import { parseCustomDictionaryFile } from '@/features/customDictionary/parser'
 import {
   createCustomDictionaryId,
@@ -15,7 +14,13 @@ import {
   deleteCustomDictionaryWords,
   saveCustomDictionaryWords,
 } from '@/features/customDictionary/storage'
-import { currentChapterAtom, currentDictIdAtom, customDictionariesAtom } from '@/store'
+import {
+  currentChapterAtom,
+  currentDictIdAtom,
+  customDictionariesAtom,
+  registerCustomDictionary,
+  unregisterCustomDictionary,
+} from '@/store'
 import type { Dictionary, Word } from '@/typings'
 import { calcChapterCount } from '@/utils'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
