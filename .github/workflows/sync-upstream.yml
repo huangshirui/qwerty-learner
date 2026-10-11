@@ -19,11 +19,28 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Reset main to latest upstream master
+      - name: Sync source tree from latest upstream master
         shell: bash
         run: |
           set -euo pipefail
           git remote add upstream https://github.com/RealKai42/qwerty-learner.git
           git fetch upstream master
-          echo "Syncing to upstream commit $(git rev-parse upstream/master)"
-          git push --force origin upstream/master:main
+          git fetch origin main
+
+          echo "Syncing source tree to upstream commit $(git rev-parse upstream/master)"
+
+          # Keep this one workflow unchanged so GITHUB_TOKEN does not need
+          # permission to create/update workflow files. The upstream workflow
+          # files are restored separately after this source-tree sync succeeds.
+          SYNC_WORKFLOW="$(git show origin/main:.github/workflows/sync-upstream.yml)"
+
+          git read-tree --reset -u upstream/master
+          rm -rf .github/workflows
+          mkdir -p .github/workflows
+          printf '%s\n' "$SYNC_WORKFLOW" > .github/workflows/sync-upstream.yml
+
+          git add -A
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: sync source tree with upstream qwerty-learner"
+          git push origin HEAD:main
