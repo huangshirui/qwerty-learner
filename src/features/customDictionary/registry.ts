@@ -1,4 +1,3 @@
-import { idDictionaryMap } from '@/resources/dictionary'
 import type { Dictionary } from '@/typings'
 import { CUSTOM_DICTIONARY_STORAGE_KEY } from './storage'
 
@@ -17,13 +16,4 @@ export function loadCustomDictionaryMetadata(): Dictionary[] {
   }
 }
 
-export function registerCustomDictionary(dictionary: Dictionary) {
-  idDictionaryMap[dictionary.id] = dictionary
-}
-
-export function unregisterCustomDictionary(id: string) {
-  delete idDictionaryMap[id]
-}
-
 export const initialCustomDictionaries = loadCustomDictionaryMetadata()
-initialCustomDictionaries.forEach(registerCustomDictionary)
