@@ -4,17 +4,6 @@ import { calcChapterCount } from '@/utils'
 // 中国考试
 const chinaExam: DictionaryResource[] = [
   {
-    id: 'rybz_4a',
-    name: '4A',
-    description: '小学四年级上词库',
-    category: '中国考试',
-    tags: ['小学英语'],
-    url: '/dicts/rybz_4a.json',
-    length: 533,
-    language: 'en',
-    languageCategory: 'en',
-  },
-  {
     id: 'cet4',
     name: 'CET-4',
     description: '大学英语四级词库',
@@ -690,6 +679,17 @@ const internationalExam: DictionaryResource[] = [
     tags: ['GRE'],
     url: '/dicts/gre-ciyileiji.json',
     length: 8785,
+    language: 'en',
+    languageCategory: 'en',
+  },
+  {
+    id: 'biomedical-terms',
+    name: '生物医学专业英语词汇',
+    description: '生物医学专业英语词汇',
+    category: '专业词汇',
+    tags: ['生物'],
+    url: '/dicts/BIOmedical.json',
+    length: 560,
     language: 'en',
     languageCategory: 'en',
   },
@@ -1625,6 +1625,17 @@ const internationalExam: DictionaryResource[] = [
     tags: ['FCE'],
     url: '/dicts/Common-Phrases-FCE-Unofficial.json',
     length: 438,
+    language: 'en',
+    languageCategory: 'en',
+  },
+  {
+    id: 'Categorized_TOEFL_Vocabulary_by_Zhanghongyan',
+    name: 'Categorized Vocab.',
+    description: '词以类记 TOEFL 2021 by ZhangHongYan (原书释义和助记; 单词序号)',
+    category: '国际考试',
+    tags: ['TOEFL'],
+    url: '/dicts/Categorized_TOEFL_Vocabulary_by_Zhanghongyan.json',
+    length: 4123,
     language: 'en',
     languageCategory: 'en',
   },
@@ -3877,6 +3888,28 @@ const programming: DictionaryResource[] = [
 
 // 日语词典
 const japaneseExam: DictionaryResource[] = [
+  {
+    id: 'japanese-hiragana',
+    name: '平假名',
+    description: '平假名练习',
+    category: '日语学习',
+    tags: ['基础', '五十音', '平假名'],
+    url: '/dicts/JapaneseHiragana.json',
+    length: 280,
+    language: 'romaji',
+    languageCategory: 'ja',
+  },
+  {
+    id: 'japanese-katakana',
+    name: '片假名',
+    description: '片假名练习',
+    category: '日语学习',
+    tags: ['基础', '五十音', '片假名'],
+    url: '/dicts/JapaneseKatakana.json',
+    length: 280,
+    language: 'romaji',
+    languageCategory: 'ja',
+  },
   {
     id: 'japanese001',
     name: '日语常见词',
